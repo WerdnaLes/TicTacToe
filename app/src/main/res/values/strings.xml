@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TicTacToe</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="start">Оберіть тип гри:</string>
+    <string name="AI_choice">Комп\'ютер</string>
+    <string name="player2_choice">Гравець</string>
+    <string name="XType">X</string>
+    <string name="OType">O</string>
+    <string name="play_type">Гра за:</string>
+    <string name="set_difficulty">Оберіть складність:</string>
+    <string name="diff_easy">Легко</string>
+    <string name="diff_hard">Важко</string>
+    <string name="play_button">Грати</string>
+    <string name="tic_tac_toe">Хрестики-Нулики</string>
+    <string name="play_again">Почати заново</string>
+    <string name="home">На головну</string>
+</resources>
