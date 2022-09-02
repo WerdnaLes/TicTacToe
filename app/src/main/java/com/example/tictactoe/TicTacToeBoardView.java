@@ -9,8 +9,6 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -25,10 +23,12 @@ public class TicTacToeBoardView extends View {
     private final Paint paint = new Paint();
     private final Paint longLines = new Paint();
     private int cellSize = getWidth() / 3;
-    private final GameLogic game;
+
     // ширина і висота в'ю
     private RectF board;
     private final Cell[] cells = new Cell[9];
+    private MyCallback callback;
+    private GameLogic game;
 
     @Override
     protected void onMeasure(int width, int height) {
@@ -67,7 +67,7 @@ public class TicTacToeBoardView extends View {
             for (int i = 0; i < 9; i++) {
                 Cell cell = cells[i];
                 if (cell.getRow() == row - 1 && cell.getCol() == col - 1) {
-                    if (game.updateGameBoard(i))
+                    if (callback.updateGameBoard(i))
                         invalidate();
                 }
             }
@@ -80,8 +80,6 @@ public class TicTacToeBoardView extends View {
     public TicTacToeBoardView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initCell();
-
-        game = new GameLogic();
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs,
                 R.styleable.TicTacToeBoard, 0, 0);
@@ -106,17 +104,15 @@ public class TicTacToeBoardView extends View {
     public enum TicTacToeModel {
         SPACE,
         X,
-        O
+        O;
     }
 
-    public void setUpGame(Button playAgain, Button home, TextView playerTurn) {
-        game.setPlayAgainBTN(playAgain);
-        game.setHomeBTN(home);
-        game.setPlayerTurn(playerTurn);
+    public void setCallback(MyCallback callback) {
+        this.callback = callback;
     }
 
-    public void reset() {
-        game.resetGame();
+    public void setGame(GameLogic game) {
+        this.game = game;
     }
 
     // виклик в конструкторі

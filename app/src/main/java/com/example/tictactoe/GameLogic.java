@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class GameLogic {
+public class GameLogic implements MyCallback {
 
     private TicTacToeBoardView.TicTacToeModel[] gameBoard;
     private TicTacToeBoardView.TicTacToeModel player;
@@ -14,11 +14,9 @@ public class GameLogic {
     private Button playAgainBTN;
     private Button homeBTN;
     private TextView playerTurn;
-    private final GameTableFragment table = new GameTableFragment();
     // 1st element = row, 2nd = col, 3rd = line type
     private int[] winType = {-1, -1, -1};
     private boolean gameWon = false;
-
 
     GameLogic() {
         setPlayer(TicTacToeBoardView.TicTacToeModel.O);
@@ -26,15 +24,16 @@ public class GameLogic {
         for (int i = 0; i < 9; i++) {
             gameBoard[i] = TicTacToeBoardView.TicTacToeModel.SPACE;
         }
-        if (table.isPlayerVsComputer()) {
+        if (GameTableFragment.isPlayerVsComputer()) {
             setPlayers();
         }
     }
 
+    @Override
     public boolean updateGameBoard(int pos) {
         if (!winnerCheck()) {
             if (gameBoard[pos] == TicTacToeBoardView.TicTacToeModel.SPACE) {
-                if (table.isPlayerVsPlayer()) {
+                if (GameTableFragment.isPlayerVsPlayer()) {
                     playerVsPlayer();
                 }
                 gameBoard[pos] = player;
@@ -42,7 +41,7 @@ public class GameLogic {
                     return false;
                 }
 
-                if (table.isPlayerVsComputer()) {
+                if (GameTableFragment.isPlayerVsComputer()) {
                     int aiMove = playerVsComputer();
                     gameBoard[aiMove] = computer;
                     if (winnerCheck()) {
@@ -54,6 +53,13 @@ public class GameLogic {
         }
         return false;
     }
+
+    public void setUpGame(Button playAgain, Button home, TextView playerTurn) {
+        setPlayAgainBTN(playAgain);
+        setHomeBTN(home);
+        setPlayerTurn(playerTurn);
+    }
+
 
     public boolean winCondition(TicTacToeBoardView.TicTacToeModel move) {
         if (gameBoard[0] == gameBoard[1] && gameBoard[0] == gameBoard[2] && gameBoard[0] == move) {
@@ -92,7 +98,7 @@ public class GameLogic {
             gameWon = true;
             return true;
         }
-        if (table.isPlayerVsComputer()) {
+        if (GameTableFragment.isPlayerVsComputer()) {
             if (winCondition(computer)) {
                 playAgainBTN.setVisibility(View.VISIBLE);
                 homeBTN.setVisibility(View.VISIBLE);
@@ -112,7 +118,6 @@ public class GameLogic {
         }
     }
 
-
     public void resetGame() {
         setPlayer(TicTacToeBoardView.TicTacToeModel.O);
         gameWon = false;
@@ -120,7 +125,7 @@ public class GameLogic {
         for (int i = 0; i < 9; i++) {
             gameBoard[i] = TicTacToeBoardView.TicTacToeModel.SPACE;
         }
-        if (table.isPlayerVsComputer()) {
+        if (GameTableFragment.isPlayerVsComputer()) {
             setPlayers();
         }
         playerTurn.setText("");
@@ -144,10 +149,6 @@ public class GameLogic {
         return gameBoard;
     }
 
-    public TicTacToeBoardView.TicTacToeModel getComputer() {
-        return computer;
-    }
-
     public void setComputer(TicTacToeBoardView.TicTacToeModel computer) {
         this.computer = computer;
     }
@@ -165,11 +166,11 @@ public class GameLogic {
     }
 
     private void setPlayers() {
-        if (table.isXChoice()) {
+        if (GameTableFragment.isXChoice()) {
             setPlayer(TicTacToeBoardView.TicTacToeModel.X);
             setComputer(TicTacToeBoardView.TicTacToeModel.O);
         }
-        if (table.isOChoice()) {
+        if (GameTableFragment.isOChoice()) {
             setPlayer(TicTacToeBoardView.TicTacToeModel.O);
             setComputer(TicTacToeBoardView.TicTacToeModel.X);
             int aiMove = playerVsComputer();
@@ -186,8 +187,7 @@ public class GameLogic {
     }
 
     private int playerVsComputer() {
-
-        if (table.isGameHard()) {
+        if (GameTableFragment.isGameHard()) {
             return setAIHardMove();
             // Easy AI
         } else {
