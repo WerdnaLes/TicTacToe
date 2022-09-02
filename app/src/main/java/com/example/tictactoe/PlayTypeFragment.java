@@ -22,24 +22,22 @@ public class PlayTypeFragment extends Fragment {
         layout.findViewById(R.id.bv_x_choice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gtFragment = new GameTableFragment();
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fl_frame, gtFragment);
+                ft.replace(R.id.fl_frame, new GameTableFragment());
                 ft.addToBackStack(null);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                gtFragment.setXChoice(true);
+                GameTableFragment.setXChoice(true);
                 ft.commit();
             }
         });
         layout.findViewById(R.id.bv_o_choice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gtFragment = new GameTableFragment();
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fl_frame, gtFragment);
+                ft.replace(R.id.fl_frame, new GameTableFragment());
                 ft.addToBackStack(null);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                gtFragment.setOChoice(true);
+                GameTableFragment.setOChoice(true);
                 ft.commit();
             }
         });
@@ -49,7 +47,6 @@ public class PlayTypeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        gtFragment=new GameTableFragment();
-        gtFragment.setGameHard(false);
+        GameTableFragment.setGameHard(false);
     }
 }

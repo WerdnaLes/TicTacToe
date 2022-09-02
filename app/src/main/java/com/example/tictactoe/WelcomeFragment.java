@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 
 public class WelcomeFragment extends Fragment {
-    StartingFragment startingFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -22,9 +21,8 @@ public class WelcomeFragment extends Fragment {
         layout.findViewById(R.id.btn_play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startingFragment = new StartingFragment();
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fl_frame, startingFragment);
+                ft.replace(R.id.fl_frame, new StartingFragment());
                 ft.addToBackStack(null);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();

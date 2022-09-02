@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 
-public class TicTacToeBoard extends View {
+public class TicTacToeBoardView extends View {
 
     private final float ROUND_CORNERS = 0.2f;
     private final int boardColor;
@@ -23,6 +23,7 @@ public class TicTacToeBoard extends View {
     private final int OColor;
     private final int winningLineColor;
     private final Paint paint = new Paint();
+    private final Paint longLines = new Paint();
     private int cellSize = getWidth() / 3;
     private final GameLogic game;
     // ширина і висота в'ю
@@ -52,7 +53,7 @@ public class TicTacToeBoard extends View {
         drawMarkers(canvas);
 
         if (game.isGameWon()) {
-            paint.setColor(winningLineColor);
+            longLines.setColor(winningLineColor);
             drawWinningLine(canvas);
         }
     }
@@ -65,7 +66,7 @@ public class TicTacToeBoard extends View {
             int col = (int) Math.ceil(event.getX() / cellSize);
             for (int i = 0; i < 9; i++) {
                 Cell cell = cells[i];
-                if (cell.row == row - 1 && cell.col == col - 1) {
+                if (cell.getRow() == row - 1 && cell.getCol() == col - 1) {
                     if (game.updateGameBoard(i))
                         invalidate();
                 }
@@ -76,7 +77,7 @@ public class TicTacToeBoard extends View {
         return false;
     }
 
-    public TicTacToeBoard(Context context, @Nullable AttributeSet attrs) {
+    public TicTacToeBoardView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initCell();
 
@@ -96,6 +97,10 @@ public class TicTacToeBoard extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
         paint.setStrokeWidth(16);
+
+        longLines.setStyle(Paint.Style.STROKE);
+        longLines.setAntiAlias(true);
+        longLines.setStrokeWidth(40);
     }
 
     public enum TicTacToeModel {
@@ -176,23 +181,23 @@ public class TicTacToeBoard extends View {
     private void drawHorizontalLine(Canvas canvas, int row, int col) {
         canvas.drawLine(col, row * cellSize + (float) cellSize / 2,
                 cellSize * 3, row * cellSize + (float) cellSize / 2,
-                paint);
+                longLines);
     }
 
     private void drawVerticalLine(Canvas canvas, int row, int col) {
         canvas.drawLine(col * cellSize + (float) cellSize / 2, row,
                 col * cellSize + (float) cellSize / 2, cellSize * 3,
-                paint);
+                longLines);
     }
 
     private void drawDiagonalLinePos(Canvas canvas) {
         canvas.drawLine(0, cellSize * 3, cellSize * 3, 0,
-                paint);
+                longLines);
     }
 
     private void drawDiagonalLineNeg(Canvas canvas) {
         canvas.drawLine(0, 0, cellSize * 3, cellSize * 3,
-                paint);
+                longLines);
     }
 
     private void drawWinningLine(Canvas canvas) {

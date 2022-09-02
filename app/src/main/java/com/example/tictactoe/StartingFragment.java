@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 public class StartingFragment extends Fragment {
-    private GameTableFragment gtFragment;
-    private SetDifficultyFragment stFragment;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,25 +24,22 @@ public class StartingFragment extends Fragment {
         layout.findViewById(R.id.bv_ai_choice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gtFragment = new GameTableFragment();
-                stFragment = new SetDifficultyFragment();
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fl_frame, stFragment);
+                ft.replace(R.id.fl_frame, new SetDifficultyFragment());
                 ft.addToBackStack(null);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                gtFragment.setPlayerVsComputer(true);
+                GameTableFragment.setPlayerVsComputer(true);
                 ft.commit();
             }
         });
         layout.findViewById(R.id.bv_player_choice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gtFragment = new GameTableFragment();
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fl_frame, gtFragment);
+                ft.replace(R.id.fl_frame, new GameTableFragment());
                 ft.addToBackStack(null);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                gtFragment.setPlayerVsPlayer(true);
+                GameTableFragment.setPlayerVsPlayer(true);
                 ft.commit();
             }
         });

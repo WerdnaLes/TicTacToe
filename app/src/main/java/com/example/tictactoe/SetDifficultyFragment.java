@@ -12,9 +12,6 @@ import android.view.ViewGroup;
 
 public class SetDifficultyFragment extends Fragment {
 
-    PlayTypeFragment ptFragment;
-    private GameTableFragment gtFragment;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -22,10 +19,8 @@ public class SetDifficultyFragment extends Fragment {
         layout.findViewById(R.id.btn_easy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ptFragment = new PlayTypeFragment();
-                gtFragment = new GameTableFragment();
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fl_frame, ptFragment);
+                ft.replace(R.id.fl_frame, new PlayTypeFragment());
                 ft.addToBackStack(null);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
@@ -34,13 +29,11 @@ public class SetDifficultyFragment extends Fragment {
         layout.findViewById(R.id.btn_hard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ptFragment = new PlayTypeFragment();
-                gtFragment = new GameTableFragment();
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fl_frame, ptFragment);
+                ft.replace(R.id.fl_frame, new PlayTypeFragment());
                 ft.addToBackStack(null);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                gtFragment.setGameHard(true);
+                GameTableFragment.setGameHard(true);
                 ft.commit();
             }
         });
@@ -50,7 +43,6 @@ public class SetDifficultyFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        gtFragment = new GameTableFragment();
-        gtFragment.setPlayerVsComputer(false);
+        GameTableFragment.setPlayerVsComputer(false);
     }
 }

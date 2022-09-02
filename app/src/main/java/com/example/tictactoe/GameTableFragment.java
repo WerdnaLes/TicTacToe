@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class GameTableFragment extends Fragment {
 
-    private TicTacToeBoard ticTacToeBoard;
+    private TicTacToeBoardView ticTacToeBoard;
     private static boolean playerVsPlayer = false;
     private static boolean playerVsComputer = false;
     private static boolean gameHard = false;
@@ -67,24 +67,24 @@ public class GameTableFragment extends Fragment {
 
     }
 
-    public void setPlayerVsPlayer(boolean playerVsPlayer) {
-        this.playerVsPlayer = playerVsPlayer;
+    public static void setPlayerVsPlayer(boolean playerVsPlayer) {
+        GameTableFragment.playerVsPlayer = playerVsPlayer;
     }
 
-    public void setPlayerVsComputer(boolean playerVsComputer) {
-        this.playerVsComputer = playerVsComputer;
+    public static void setPlayerVsComputer(boolean playerVsComputer) {
+        GameTableFragment.playerVsComputer = playerVsComputer;
     }
 
-    public void setGameHard(boolean gameHard) {
-        this.gameHard = gameHard;
+    public static void setGameHard(boolean gameHard) {
+        GameTableFragment.gameHard = gameHard;
     }
 
-    public void setXChoice(boolean XChoice) {
-        this.XChoice = XChoice;
+    public static void setXChoice(boolean XChoice) {
+        GameTableFragment.XChoice = XChoice;
     }
 
-    public void setOChoice(boolean OChoice) {
-        this.OChoice = OChoice;
+    public static void setOChoice(boolean OChoice) {
+        GameTableFragment.OChoice = OChoice;
     }
 
     public boolean isPlayerVsPlayer() {

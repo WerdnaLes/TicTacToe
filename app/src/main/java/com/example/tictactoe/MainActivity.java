@@ -13,9 +13,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WelcomeFragment welcomeFragment = new WelcomeFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fl_frame, welcomeFragment);
+        ft.replace(R.id.fl_frame, new WelcomeFragment());
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
     }

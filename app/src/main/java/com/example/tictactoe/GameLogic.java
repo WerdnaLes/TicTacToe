@@ -8,9 +8,9 @@ import java.util.Random;
 
 public class GameLogic {
 
-    private TicTacToeBoard.TicTacToeModel[] gameBoard;
-    private TicTacToeBoard.TicTacToeModel player;
-    private TicTacToeBoard.TicTacToeModel computer;
+    private TicTacToeBoardView.TicTacToeModel[] gameBoard;
+    private TicTacToeBoardView.TicTacToeModel player;
+    private TicTacToeBoardView.TicTacToeModel computer;
     private Button playAgainBTN;
     private Button homeBTN;
     private TextView playerTurn;
@@ -21,10 +21,10 @@ public class GameLogic {
 
 
     GameLogic() {
-        setPlayer(TicTacToeBoard.TicTacToeModel.O);
-        gameBoard = new TicTacToeBoard.TicTacToeModel[9];
+        setPlayer(TicTacToeBoardView.TicTacToeModel.O);
+        gameBoard = new TicTacToeBoardView.TicTacToeModel[9];
         for (int i = 0; i < 9; i++) {
-            gameBoard[i] = TicTacToeBoard.TicTacToeModel.SPACE;
+            gameBoard[i] = TicTacToeBoardView.TicTacToeModel.SPACE;
         }
         if (table.isPlayerVsComputer()) {
             setPlayers();
@@ -33,7 +33,7 @@ public class GameLogic {
 
     public boolean updateGameBoard(int pos) {
         if (!winnerCheck()) {
-            if (gameBoard[pos] == TicTacToeBoard.TicTacToeModel.SPACE) {
+            if (gameBoard[pos] == TicTacToeBoardView.TicTacToeModel.SPACE) {
                 if (table.isPlayerVsPlayer()) {
                     playerVsPlayer();
                 }
@@ -55,7 +55,7 @@ public class GameLogic {
         return false;
     }
 
-    public boolean winCondition(TicTacToeBoard.TicTacToeModel move) {
+    public boolean winCondition(TicTacToeBoardView.TicTacToeModel move) {
         if (gameBoard[0] == gameBoard[1] && gameBoard[0] == gameBoard[2] && gameBoard[0] == move) {
             winType = new int[]{0, 0, 1};
             return true;
@@ -114,11 +114,11 @@ public class GameLogic {
 
 
     public void resetGame() {
-        setPlayer(TicTacToeBoard.TicTacToeModel.O);
+        setPlayer(TicTacToeBoardView.TicTacToeModel.O);
         gameWon = false;
-        gameBoard = new TicTacToeBoard.TicTacToeModel[9];
+        gameBoard = new TicTacToeBoardView.TicTacToeModel[9];
         for (int i = 0; i < 9; i++) {
-            gameBoard[i] = TicTacToeBoard.TicTacToeModel.SPACE;
+            gameBoard[i] = TicTacToeBoardView.TicTacToeModel.SPACE;
         }
         if (table.isPlayerVsComputer()) {
             setPlayers();
@@ -140,19 +140,19 @@ public class GameLogic {
         this.playerTurn = playerTurn;
     }
 
-    public TicTacToeBoard.TicTacToeModel[] getGameBoard() {
+    public TicTacToeBoardView.TicTacToeModel[] getGameBoard() {
         return gameBoard;
     }
 
-    public TicTacToeBoard.TicTacToeModel getComputer() {
+    public TicTacToeBoardView.TicTacToeModel getComputer() {
         return computer;
     }
 
-    public void setComputer(TicTacToeBoard.TicTacToeModel computer) {
+    public void setComputer(TicTacToeBoardView.TicTacToeModel computer) {
         this.computer = computer;
     }
 
-    public void setPlayer(TicTacToeBoard.TicTacToeModel player) {
+    public void setPlayer(TicTacToeBoardView.TicTacToeModel player) {
         this.player = player;
     }
 
@@ -166,22 +166,22 @@ public class GameLogic {
 
     private void setPlayers() {
         if (table.isXChoice()) {
-            setPlayer(TicTacToeBoard.TicTacToeModel.X);
-            setComputer(TicTacToeBoard.TicTacToeModel.O);
+            setPlayer(TicTacToeBoardView.TicTacToeModel.X);
+            setComputer(TicTacToeBoardView.TicTacToeModel.O);
         }
         if (table.isOChoice()) {
-            setPlayer(TicTacToeBoard.TicTacToeModel.O);
-            setComputer(TicTacToeBoard.TicTacToeModel.X);
+            setPlayer(TicTacToeBoardView.TicTacToeModel.O);
+            setComputer(TicTacToeBoardView.TicTacToeModel.X);
             int aiMove = playerVsComputer();
             gameBoard[aiMove] = computer;
         }
     }
 
     private void playerVsPlayer() {
-        if (player == TicTacToeBoard.TicTacToeModel.X) {
-            setPlayer(TicTacToeBoard.TicTacToeModel.O);
+        if (player == TicTacToeBoardView.TicTacToeModel.X) {
+            setPlayer(TicTacToeBoardView.TicTacToeModel.O);
         } else {
-            setPlayer(TicTacToeBoard.TicTacToeModel.X);
+            setPlayer(TicTacToeBoardView.TicTacToeModel.X);
         }
     }
 
@@ -198,7 +198,7 @@ public class GameLogic {
     private int setAIEasyMove() {
         while (!tie()) {
             int random = new Random().nextInt(9);
-            if (getGameBoard()[random] == TicTacToeBoard.TicTacToeModel.SPACE) {
+            if (getGameBoard()[random] == TicTacToeBoardView.TicTacToeModel.SPACE) {
                 return random;
             }
         }
@@ -211,10 +211,10 @@ public class GameLogic {
         int bestScore = 2147483647;
 
         for (int i = 0; i < getGameBoard().length; i++) {
-            if (gameBoard[i] == TicTacToeBoard.TicTacToeModel.SPACE) {
+            if (gameBoard[i] == TicTacToeBoardView.TicTacToeModel.SPACE) {
                 gameBoard[i] = computer;
                 int score = minimax(false);
-                gameBoard[i] = TicTacToeBoard.TicTacToeModel.SPACE;
+                gameBoard[i] = TicTacToeBoardView.TicTacToeModel.SPACE;
                 if (score < bestScore) {
                     bestScore = score;
                     bestMove = i;
@@ -240,10 +240,10 @@ public class GameLogic {
                 bestScore = 2147483647;
 
                 for (int i = 0; i < gameBoard.length; i++) {
-                    if (gameBoard[i] == TicTacToeBoard.TicTacToeModel.SPACE) {
+                    if (gameBoard[i] == TicTacToeBoardView.TicTacToeModel.SPACE) {
                         gameBoard[i] = computer;
                         int score = this.minimax(false);
-                        gameBoard[i] = TicTacToeBoard.TicTacToeModel.SPACE;
+                        gameBoard[i] = TicTacToeBoardView.TicTacToeModel.SPACE;
                         if (score == -1) {
                             return score;
                         }
@@ -256,10 +256,10 @@ public class GameLogic {
                 bestScore = -2147483648;
 
                 for (int i = 0; i < getGameBoard().length; i++) {
-                    if (gameBoard[i] == TicTacToeBoard.TicTacToeModel.SPACE) {
+                    if (gameBoard[i] == TicTacToeBoardView.TicTacToeModel.SPACE) {
                         gameBoard[i] = player;
                         int score = this.minimax(true);
-                        gameBoard[i] = TicTacToeBoard.TicTacToeModel.SPACE;
+                        gameBoard[i] = TicTacToeBoardView.TicTacToeModel.SPACE;
                         if (score == 1) {
                             return score;
                         }
@@ -273,8 +273,8 @@ public class GameLogic {
 
     private boolean tie() { // нічия
         boolean tieTrue = true;
-        for (TicTacToeBoard.TicTacToeModel ticTacToeModels : getGameBoard()) {
-            if (ticTacToeModels != TicTacToeBoard.TicTacToeModel.SPACE) {
+        for (TicTacToeBoardView.TicTacToeModel ticTacToeModels : getGameBoard()) {
+            if (ticTacToeModels != TicTacToeBoardView.TicTacToeModel.SPACE) {
                 tieTrue = false;
             } else {
                 return false;
