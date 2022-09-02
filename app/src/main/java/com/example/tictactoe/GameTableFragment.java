@@ -15,6 +15,7 @@ import android.widget.TextView;
 public class GameTableFragment extends Fragment {
 
     private TicTacToeBoardView ticTacToeBoard;
+    private GameLogic gameLogic;
     private static boolean playerVsPlayer = false;
     private static boolean playerVsComputer = false;
     private static boolean gameHard = false;
@@ -26,14 +27,19 @@ public class GameTableFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_table, container, false);
+        gameLogic = new GameLogic();
         ticTacToeBoard = layout.findViewById(R.id.ticTacToeBoard);
+        ticTacToeBoard.setCallback(gameLogic);
+        ticTacToeBoard.setGame(gameLogic);
+
         Button replayBtn = layout.findViewById(R.id.btn_play_again);
         Button homeBtn = layout.findViewById(R.id.btn_home);
         TextView playerWon = layout.findViewById(R.id.tv_player_won);
+
         replayBtn.setVisibility(View.GONE);
         homeBtn.setVisibility(View.GONE);
 
-        ticTacToeBoard.setUpGame(replayBtn, homeBtn, playerWon);
+        gameLogic.setUpGame(replayBtn, homeBtn, playerWon);
         replayBtn.setOnClickListener(this::onButtonsClicked);
         homeBtn.setOnClickListener(this::onButtonsClicked);
         return layout;
@@ -43,7 +49,7 @@ public class GameTableFragment extends Fragment {
     public void onButtonsClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_play_again:
-                ticTacToeBoard.reset();
+                gameLogic.resetGame();
                 ticTacToeBoard.invalidate();
                 break;
             case R.id.btn_home:
@@ -57,10 +63,10 @@ public class GameTableFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (playerVsPlayer) {
+        if (isPlayerVsPlayer()) {
             setPlayerVsPlayer(false);
         }
-        if (playerVsComputer){
+        if (isPlayerVsComputer()) {
             setOChoice(false);
             setXChoice(false);
         }
@@ -87,23 +93,23 @@ public class GameTableFragment extends Fragment {
         GameTableFragment.OChoice = OChoice;
     }
 
-    public boolean isPlayerVsPlayer() {
+    public static boolean isPlayerVsPlayer() {
         return playerVsPlayer;
     }
 
-    public boolean isPlayerVsComputer() {
+    public static boolean isPlayerVsComputer() {
         return playerVsComputer;
     }
 
-    public boolean isGameHard() {
+    public static boolean isGameHard() {
         return gameHard;
     }
 
-    public boolean isXChoice() {
+    public static boolean isXChoice() {
         return XChoice;
     }
 
-    public boolean isOChoice() {
+    public static boolean isOChoice() {
         return OChoice;
     }
 }

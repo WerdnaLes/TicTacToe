@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 
 public class PlayTypeFragment extends Fragment {
 
-    private GameTableFragment gtFragment;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
